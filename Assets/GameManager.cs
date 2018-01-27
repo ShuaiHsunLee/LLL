@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
     Vector3 pos2;
     string objName;
 
+    public List<GameObject> RandomSounds;
+
     public List<GameObject> TheDigits; 
 
     int[] values = new int[4];
@@ -25,6 +27,9 @@ public class GameManager : MonoBehaviour {
         string s = "" + values[3].ToString() + values[2].ToString() + values[1].ToString() + "." + values[0].ToString();
         return s;
     }
+
+
+
 
 
     void UpdateDisplay()
@@ -47,7 +52,67 @@ public class GameManager : MonoBehaviour {
 
         DoSomethingWithChannel();
     }
-    void DoSomethingWithChannel() { }
+
+    GameObject PlayingSound = null;
+    float lastChannelToPlay = -1;
+
+    void PlayRandomSound()
+    {
+        int SoundIndex = Random.Range(0, RandomSounds.Count);
+        Debug.Log("Playing random sound " + SoundIndex);
+
+        if (SoundIndex > 0 && SoundIndex < RandomSounds.Count)
+        {
+        GameObject obj = RandomSounds[SoundIndex];
+
+        if (obj != null)
+            {
+            AudioSource audio = obj.GetComponent<AudioSource>();
+            if (audio!=null)
+                {
+                    audio.enabled = true;
+                    PlayingSound = obj;
+                    lastChannelToPlay = CurrentChannel; 
+                 }
+            }
+        }
+    }
+
+    void DoSomethingWithChannel()
+     { 
+        if (CurrentChannel != lastChannelToPlay)
+        {
+          if (PlayingSound!=null )
+            {
+            AudioSource audio = PlayingSound.GetComponent<AudioSource>();
+            if (audio!=null)
+                audio.enabled = false;
+            }
+          PlayingSound = null;
+          string newSoundName = "Sound"+MakeNumString();
+          Debug.Log("Finding Sound: "+newSoundName);
+          PlayingSound = GameObject.Find(newSoundName);
+          Debug.Log("Found: "+PlayingSound);
+          if (PlayingSound!=null)
+          {
+            AudioSource audio = PlayingSound.GetComponent<AudioSource>();
+            if (audio != null)
+            {
+            Debug.Log("Playing: "+PlayingSound.name);
+            audio.enabled = true;
+            lastChannelToPlay = CurrentChannel;  
+            }
+        }
+          else
+          {
+            PlayRandomSound();
+          }
+
+
+        }
+     }
+
+
     public void SetTenths(int value)
     {
         values[0] = value;

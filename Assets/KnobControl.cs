@@ -10,6 +10,11 @@ public class KnobControl : MonoBehaviour {
     int objPos = 0;
     string knobNum;
 
+    public float targetAngle = 45;
+    public float rotationSpeed = 60;
+
+    public float MinAngle = 45;
+    public float MaxAngle = 315;
 
     // Use this for initialization
     void Start() {
@@ -19,6 +24,17 @@ public class KnobControl : MonoBehaviour {
 
     }
 
+    void Update()
+    {
+    	if (transform.localEulerAngles.y != targetAngle)
+    	{
+    		float newAngle = Mathf.MoveTowardsAngle(transform.localEulerAngles.y, targetAngle, rotationSpeed*Time.deltaTime);
+    		transform.localEulerAngles = new Vector3(transform.rotation.x, newAngle, transform.rotation.z);
+    		Debug.Log(targetAngle);
+    	}
+    }
+
+
     public void KnobNumber()
     {
         if (TheGameController.GetComponent<GameManager>())
@@ -27,11 +43,18 @@ public class KnobControl : MonoBehaviour {
         }
     }
 
+    float CalcAngle(int value)
+    {
+    	return MinAngle + ((MaxAngle - MinAngle) / 10 * value);
+    }
+
+
+
     public void Increment()
     {
         value++;
         value = value % 10;
-
+        targetAngle = CalcAngle(value);
         switch (position)
         {
             case 0:
