@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour {
 
-    public float CurrentChannel = 0;
+    public GameObject PasswordForm;
+    public string CurrentChannel = "";
     public Text theDial;
     Camera camera;
     Renderer rend;
     public GameObject startObject;
+    public InputField myText;
     Vector3 pos1;
     Vector3 pos2;
     string objName;
 
+    public GameObject GameOverObject = null;
+
     public List<GameObject> RandomSounds;
-    public List<GameObject> RandomClickSounds;
 
     public List<GameObject> TheDigits; 
 
@@ -29,13 +34,66 @@ public class GameManager : MonoBehaviour {
         return s;
     }
 
+    
+    string CurrentBand
+    {
+        get
+        {
+            if (AmFm.amBool)
+                return "AM";
+            else
+                return "FM";
+        }
+    }
 
+    public static bool GameOver = false;
 
+    public void EnteredAPassword()
+    {
+        if (string.Equals(myText.text.ToUpper(), "GEMINI")) 
+        {
+             StopCurrentSound();        
 
+             Debug.Log("Correct!");
+            PlayingSound = GameObject.Find("WELLDONE");
+            AudioSource audio = PlayingSound.GetComponent<AudioSource>();
+
+            if (audio != null)
+            {
+                Debug.Log(PlayingSound.name);
+                audio.enabled = true;
+            }
+            myText.text = "";
+            GameOver = true;
+            if (GameOverObject != null)
+                GameOverObject.SetActive(true);
+        }
+        else  
+        {
+             StopCurrentSound();        
+             Debug.Log("Wrong!");
+            PlayingSound = GameObject.Find("WRONG");
+            AudioSource audio = PlayingSound.GetComponent<AudioSource>();
+            if (audio != null)
+            {
+                Debug.Log(PlayingSound.name);
+                audio.enabled = false;
+                audio.enabled = true;
+                PlayingSound = null;
+            }
+            myText.text = "";
+
+        }
+
+        PasswordForm.SetActive(false);
+    }
 
     void UpdateDisplay()
     {
-        CurrentChannel = values[3] * 100 + values[2] * 10 + values[1] +  (float)values[0] / 10.0f;
+        if (GameOver)
+            return;
+
+        CurrentChannel = values[3].ToString() + values[2].ToString() + values[1].ToString() + "."+ values[0].ToString()  + CurrentBand;
         if (theDial != null)
         {
             theDial.text = MakeNumString();
@@ -55,7 +113,7 @@ public class GameManager : MonoBehaviour {
     }
 
     GameObject PlayingSound = null;
-    float lastChannelToPlay = -1;
+    string lastChannelToPlay = "x";
 
     void PlayRandomSound()
     {
@@ -77,34 +135,15 @@ public class GameManager : MonoBehaviour {
                  }
             }
         }
-
-
     }
 
+    string LastBand = "";
 
-    void PlayClickSound()
-    {
-        Debug.Log("play click sound");
-        int SoundClickIndex = Random.Range(0, RandomSounds.Count);
+  void StopCurrentSound()
+  {
 
-        if (SoundClickIndex > 0 && SoundClickIndex <RandomClickSounds.Count)
-        {
-            GameObject clickobj = RandomSounds[SoundClickIndex];
-            if (clickobj != null)
-            {
-                AudioSource clickaudio = clickobj.GetComponent<AudioSource>();
-                if (clickaudio!=null)
-                {
-                    clickaudio.enabled = true;
-                }
-            }
-        }
-    }
 
-    void DoSomethingWithChannel()
-     { 
-        if (CurrentChannel != lastChannelToPlay)
-        {
+
           if (PlayingSound!=null )
             {
             AudioSource audio = PlayingSound.GetComponent<AudioSource>();
@@ -112,7 +151,21 @@ public class GameManager : MonoBehaviour {
                 audio.enabled = false;
             }
           PlayingSound = null;
+            CurrentChannel = "";
+  }
+
+    void DoSomethingWithChannel()
+     { 
+        
+
+        if (CurrentChannel != lastChannelToPlay || LastBand != CurrentBand)
+        {
+
+             StopCurrentSound();        
+
           string newSoundName = "Sound"+MakeNumString();
+                newSoundName += CurrentBand;
+           
           Debug.Log("Finding Sound: "+newSoundName);
           PlayingSound = GameObject.Find(newSoundName);
           Debug.Log("Found: "+PlayingSound);
@@ -123,7 +176,8 @@ public class GameManager : MonoBehaviour {
             {
             Debug.Log("Playing: "+PlayingSound.name);
             audio.enabled = true;
-            lastChannelToPlay = CurrentChannel;  
+            lastChannelToPlay = CurrentChannel;
+            LastBand = CurrentBand;
             }
         }
           else
@@ -133,8 +187,6 @@ public class GameManager : MonoBehaviour {
 
 
         }
-
-        //PlayClickSound();
      }
 
 
@@ -166,10 +218,16 @@ public class GameManager : MonoBehaviour {
 
     }
 
-
+    
+    public void BandHasChanged(string FreqBand)
+    {
+        Debug.Log("Band has changed to " + CurrentBand);
+        UpdateDisplay();
+    }
 
     void Start()
     {
+        
         var cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
         if (cameraObject)
         {
@@ -183,6 +241,18 @@ public class GameManager : MonoBehaviour {
     }
     void Update()
     {
+        if (GameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                GameOver = false;
+               Scene loadedLevel = SceneManager.GetActiveScene ();
+                SceneManager.LoadScene (loadedLevel.buildIndex);           
+            }
+            return;
+
+        }
+
 
         if (firstRun)
         {
@@ -193,6 +263,13 @@ public class GameManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             startObject = ObjectAtMouse();
+
+            if (startObject !=null  && startObject.name == "terminal")
+            {
+                myText.text = "";
+                PasswordForm.SetActive(true);
+            }
+
             Debug.Log("Start at " + startObject);
 
             if (startObject != null)
@@ -242,5 +319,4 @@ public class GameManager : MonoBehaviour {
         }
         return theObject;
     }
-
 }
