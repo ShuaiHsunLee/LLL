@@ -14,7 +14,7 @@ public class KnobControl : MonoBehaviour {
     public float rotationSpeed = 60;
 
     public float MinAngle = 45;
-    public float MaxAngle = 315;
+    public float MaxAngle = 360;
 
     // Use this for initialization
     void Start() {
@@ -45,7 +45,7 @@ public class KnobControl : MonoBehaviour {
 
     float CalcAngle(int value)
     {
-    	return MinAngle + ((MaxAngle - MinAngle) / 10 * value);
+    	return MinAngle + ((MaxAngle - MinAngle) / 9 * value);
     }
 
 
@@ -55,6 +55,7 @@ public class KnobControl : MonoBehaviour {
         value++;
         value = value % 10;
         targetAngle = CalcAngle(value);
+        Debug.Log("Angle is " + targetAngle);
         switch (position)
         {
             case 0:

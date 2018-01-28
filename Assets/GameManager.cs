@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
     string objName;
 
     public List<GameObject> RandomSounds;
+    public List<GameObject> RandomClickSounds;
 
     public List<GameObject> TheDigits; 
 
@@ -76,6 +77,28 @@ public class GameManager : MonoBehaviour {
                  }
             }
         }
+
+
+    }
+
+
+    void PlayClickSound()
+    {
+        Debug.Log("play click sound");
+        int SoundClickIndex = Random.Range(0, RandomSounds.Count);
+
+        if (SoundClickIndex > 0 && SoundClickIndex <RandomClickSounds.Count)
+        {
+            GameObject clickobj = RandomSounds[SoundClickIndex];
+            if (clickobj != null)
+            {
+                AudioSource clickaudio = clickobj.GetComponent<AudioSource>();
+                if (clickaudio!=null)
+                {
+                    clickaudio.enabled = true;
+                }
+            }
+        }
     }
 
     void DoSomethingWithChannel()
@@ -110,6 +133,8 @@ public class GameManager : MonoBehaviour {
 
 
         }
+
+        //PlayClickSound();
      }
 
 
