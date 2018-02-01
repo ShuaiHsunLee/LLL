@@ -1,7 +1,7 @@
 # game-jam-2018  
 
-credits:  
 # TEAM KLACK    
+## credits: <br />
 
 Antonio Lepore  | Musician, Sound Designer <antonio@muvmentmusic.com><br /> 
 [Victor Lee](https://www.linkedin.com/in/shuaihsunlee)      | Programmer<br />
