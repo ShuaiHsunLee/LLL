@@ -3,9 +3,9 @@
 credits:  
 TEAM KLACK    
 
-[Antonio Lepore]<antonio@muvmentmusic.com>  | Musician, Sound Designer
-[Victor Lee](https://www.linkedin.com/in/shuaihsunlee)      | Programmer  
-[Henry Klotz]<klotzhen@gmail.com>     | Producer, 3D Modeller & Animator  
-[Elvyn Leviste]<elvynleviste@gmail.com>   | Programmer  
-[Daniel Cravens]<daniellegoman@gmail.com>  | Artist, Writer    
-[Harry Evry](https://www.emagitech.com)      | Instructor  
+Antonio Lepore  | Musician, Sound Designer <antonio@muvmentmusic.com> . 
+[Victor Lee](https://www.linkedin.com/in/shuaihsunlee)      | Programmer . 
+Henry Klotz     | Producer, 3D Modeller & Animator <klotzhen@gmail.com> . 
+Elvyn Leviste   | Programmer <elvynleviste@gmail.com> . 
+Daniel Cravens  | Artist, Writer <daniellegoman@gmail.com> . 
+[Harry Evry](https://www.emagitech.com)      | Instructor <HARRY@TRANSMERSIVE.COM> . 
