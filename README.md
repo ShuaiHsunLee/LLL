@@ -8,5 +8,5 @@ Antonio Lepore  | Musician, Sound Designer <antonio@muvmentmusic.com><br />
 Henry Klotz     | Producer, 3D Modeller & Animator <klotzhen@gmail.com><br />
 Elvyn Leviste   | Programmer <elvynleviste@gmail.com><br />
 Daniel Cravens  | Artist, Writer <daniellegoman@gmail.com><br />
-[Harry Evry](https://www.emagitech.com)      | Instructor <HARRY@TRANSMERSIVE.COM><br />
 ![alt text](https://github.com/ShuaiHsunLee/LLL/blob/master/team.jpg "TEAM PICTURE")
+[Harry Evry](https://www.emagitech.com)      | Instructor <HARRY@TRANSMERSIVE.COM><br />
