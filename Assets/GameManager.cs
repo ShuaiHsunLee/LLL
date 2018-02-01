@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
     string objName;
 
     public GameObject GameOverObject = null;
+    public Image myImage;
+    public Text imageText;
 
     public List<GameObject> RandomSounds;
 
@@ -241,6 +243,23 @@ public class GameManager : MonoBehaviour {
     }
     void Update()
     {
+        if (GameOver)
+        {
+            myImage.gameObject.SetActive(true);
+            Color c = myImage.color;
+            Color d = imageText.color;
+            c.a += (.2f * Time.deltaTime);
+            d.a += (.15f * Time.deltaTime);
+            myImage.color = c;
+            imageText.color = d;
+            
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(0);
+            }
+            Debug.Log("Win");
+        }
+
         if (GameOver)
         {
             if (Input.GetKeyDown(KeyCode.R))
