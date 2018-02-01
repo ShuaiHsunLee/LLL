@@ -1,8 +1,6 @@
-# game-jam-2018  
-
-# TEAM KLACK    
+# Global Game Jam® January 26 - 28, 2018
 ## credits: <br />
-
+[TEAM KLACK](https://globalgamejam.org/2018/games/lll) <br />
 Antonio Lepore  | Musician, Sound Designer <antonio@muvmentmusic.com><br /> 
 [Victor Lee](https://www.linkedin.com/in/shuaihsunlee)      | Programmer<br />
 Henry Klotz     | Producer, 3D Modeller & Animator <klotzhen@gmail.com><br />
